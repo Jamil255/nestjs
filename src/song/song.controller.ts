@@ -1,14 +1,16 @@
 import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { SongService } from './song.service';
 
 @Controller('song')
 export class SongController {
+    constructor(private songService: SongService){}
   @Post()
-  create(@Body() createUserDto: any) {
-    return `User created with the following data: ${JSON.stringify(createUserDto)}`;
+  create() {
+    return this.songService.create("b")
   }
   @Get()
   findAll() {
-    return 'hello world from nest js server';
+    return this.songService.findAll();
   }
   @Delete(':id')
   helloFun() {
