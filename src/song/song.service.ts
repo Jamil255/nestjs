@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { title } from 'process';
 
 @Injectable()
 export class SongService {
@@ -8,6 +9,8 @@ export class SongService {
     return this.songs;
   }
   findAll() {
+    // error while data fetching on db
+    // throw new Error('error in db');
     return this.songs;
   }
 }
