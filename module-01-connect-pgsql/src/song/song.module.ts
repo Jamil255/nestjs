@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { SongController } from './song.controller';
 import { SongService } from './song.service';
 import { connection } from 'src/common/constant/connection';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Song } from './song.entity';
 const mockSongService = {
   findAll() {
     return [
@@ -13,6 +15,7 @@ const mockSongService = {
   },
 };
 @Module({
+  imports: [TypeOrmModule.forFeature([Song])],
   controllers: [SongController],
   //   providers: [SongService, { provide: 'CONNECTION', useValue: 'Connection' }],
   providers: [

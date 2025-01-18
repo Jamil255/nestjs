@@ -2,26 +2,25 @@ import {
   IsArray,
   IsDateString,
   IsMilitaryTime,
-  IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
 
-export class CreateSongDTO {
+export class UpdateSongDTO {
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   readonly title: string;
 
-  @IsNotEmpty()
-  @IsArray()
   @IsString({ each: true })
-  readonly artist: string[];
+  @IsOptional()
+  @IsArray()
+  readonly artist;
 
-  @IsNotEmpty()
   @IsDateString()
+  @IsOptional()
   readonly releasedDate: Date;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsMilitaryTime()
   readonly duration: Date;
 
