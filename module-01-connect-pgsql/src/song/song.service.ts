@@ -1,10 +1,15 @@
-import { Injectable, Scope } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { title } from 'process';
-import { Song } from './song.entity';
 import { Repository, UpdateResult } from 'typeorm';
 import { CreateSongDTO } from './dto/create-song-dto';
 import { UpdateSongDTO } from './dto/update-song-dto';
+import { Song } from './song.entity';
+import {
+  IPaginationOptions,
+  paginate,
+  Pagination,
+} from 'nestjs-typeorm-paginate';
+import { query } from 'express';
 
 @Injectable()
 export class SongService {
@@ -36,5 +41,10 @@ export class SongService {
   }
   update(id: number, recordToUpload: UpdateSongDTO): Promise<UpdateResult> {
     return this.songRepository.update(id, recordToUpload);
+  }
+  async paginate(options: IPaginationOptions): Promise<Pagination<Song>> {
+    const queryBuilder = this.songRepository.createQueryBuilder('c');
+    queryBuilder.orderBy('c.releasedDate', 'DESC');
+    return paginate<Song>(queryBuilder, options);
   }
 }
