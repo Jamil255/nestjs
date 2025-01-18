@@ -10,12 +10,16 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Scope,
 } from '@nestjs/common';
 import { SongService } from './song.service';
 import { CreateSongDTO } from './dto/create-song-dto';
 import { Connection } from 'src/common/constant/connection';
 
-@Controller('song')
+@Controller({
+    path: 'song',
+    scope:Scope.DEFAULT
+})
 export class SongController {
   constructor(
     private songService: SongService,
