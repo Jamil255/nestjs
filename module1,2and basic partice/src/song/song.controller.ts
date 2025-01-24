@@ -5,38 +5,25 @@ import {
   Get,
   HttpException,
   HttpStatus,
-  Inject,
   Param,
   ParseIntPipe,
   Post,
   Put,
-  Scope,
 } from '@nestjs/common';
+import { createSongDto } from './dto/create-song-dto';
 import { SongService } from './song.service';
-import { CreateSongDTO } from './dto/create-song-dto';
-import { Connection } from 'src/common/constant/connection';
 
-@Controller({
-    path: 'song',
-    scope:Scope.DEFAULT
-})
+@Controller('song')
 export class SongController {
-  constructor(
-    private songService: SongService,
-    @Inject('CONNECTION')
-    private connection: Connection,
-  ) {
-      console.log(this.connection.Db)
-  }
+  constructor(private songService: SongService) {}
   @Post()
-  create(@Body() createSongDto: CreateSongDTO) {
+  createSong(@Body() createSongDto: createSongDto) {
     return this.songService.create(createSongDto);
   }
-
-  @Get()
-  findAll() {
+  @Get(':id')
+  get(@Param('id', ParseIntPipe) id: number) {
     try {
-      return this.songService.findAll();
+      return this.songService.getSong();
     } catch (e) {
       throw new HttpException(
         'server error',
@@ -45,22 +32,18 @@ export class SongController {
       );
     }
   }
-  @Get(':id')
-  findOne(
+  @Put(':id')
+  put(
     @Param(
       'id',
       new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE }),
     )
     id: number,
   ) {
-    return `return is id type ${typeof id}`;
+    return this.songService.put();
   }
-  @Delete(':id')
-  helloFun() {
-    return 'delete users';
-  }
-  @Put(':id')
-  update() {
-    return 'update user';
+  @Delete()
+  delete() {
+    return this.songService.delete();
   }
 }

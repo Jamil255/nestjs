@@ -1,16 +1,26 @@
-import { Injectable, Scope } from '@nestjs/common';
-import { title } from 'process';
+import { Inject, Injectable, Post } from '@nestjs/common';
+import { Connection } from 'src/common/constants/connection';
 
 @Injectable()
 export class SongService {
-  private readonly songs = [];
-  create(song) {
-    this.songs.push(song);
-    return this.songs;
+  private readonly song = [];
+  constructor(
+    @Inject('CONNECTION')
+    connection: Connection,
+  ) {
+    //   console.log(connection);
   }
-  findAll() {
-    // error while data fetching on db
-    // throw new Error('error in db');
-    return this.songs;
+  create(song) {
+    this.song.push(song);
+    return this.song;
+  }
+  getSong() {
+    return this.song;
+  }
+  put() {
+    return 'This will update a song';
+  }
+  delete() {
+    return 'This will delete a song';
   }
 }

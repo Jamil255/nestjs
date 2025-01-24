@@ -1,27 +1,25 @@
 import { Module } from '@nestjs/common';
 import { SongController } from './song.controller';
 import { SongService } from './song.service';
-import { connection } from 'src/common/constant/connection';
+import { connection } from 'src/common/constants/connection';
+//  value provider
+// inject the constants value into the  SongService
 const mockSongService = {
-  findAll() {
-    return [
-      {
-        artist: ['atif', 'arjit'],
-        title: 'random song',
-      },
-    ];
+  put: () => {
+    return 'This is a mock service';
   },
 };
 @Module({
+  imports: [],
   controllers: [SongController],
-  //   providers: [SongService, { provide: 'CONNECTION', useValue: 'Connection' }],
   providers: [
     SongService,
-    //
+    // standard provider
     //   {
-    //     provide: SongService,
-    //     useClass: SongService,
-    //   },
+    //       provide: SongService,
+    //      useClass: SongService
+    //  }
+    //   value provider
     // {
     //   provide: SongService,
     //   useValue: mockSongService,
@@ -29,7 +27,10 @@ const mockSongService = {
     {
       provide: 'CONNECTION',
       useValue: connection,
-    },
+      },
+      
+      //   class provider 
+      
   ],
 })
 export class SongModule {}
