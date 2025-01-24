@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { SongController } from './song.controller';
 import { SongService } from './song.service';
 import { connection } from 'src/common/constants/connection';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Song } from './song.entity';
 //  value provider
 // inject the constants value into the  SongService
 const mockSongService = {
@@ -10,7 +12,7 @@ const mockSongService = {
   },
 };
 @Module({
-  imports: [],
+  imports: [TypeOrmModule.forFeature([Song])],
   controllers: [SongController],
   providers: [
     SongService,

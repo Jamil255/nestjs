@@ -13,7 +13,7 @@ export class createSongDto {
 
   @IsString()
   @IsNotEmpty()
-  readonly description: string;
+  readonly layrics: string;
 
   @IsArray()
   @IsString({ each: true })
